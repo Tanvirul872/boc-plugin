@@ -6,18 +6,51 @@
  * Author: Tanvirul Karim
  */
 
-// Activate the plugin
-function boc_form_activate() {
-    // Add any activation tasks here
-}
-register_activation_hook( __FILE__, 'boc_form_activate' );
 
-// Deactivate the plugin
-function boc_form_deactivate() {
-    // Add any deactivation tasks here
-}
-register_deactivation_hook( __FILE__, 'boc_form_deactivate' );
 
+include('database.php');
+
+// Register activation hook
+register_activation_hook( __FILE__, 'create_custom_table' );
+
+// Function to create the custom table
+function create_custom_table() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'boc_registration_form';
+
+    // SQL query to create the table
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        member_id INT,
+        name VARCHAR(255),
+        dob DATE,
+        present_designation VARCHAR(255),
+        father_name VARCHAR(255),
+        mother_name VARCHAR(255),
+        spouse_name VARCHAR(255),
+        spouse_profession VARCHAR(255),
+        num_children INT,
+        nationality VARCHAR(255),
+        email VARCHAR(255),
+        password VARCHAR(255),
+        national_id_no VARCHAR(255),
+        nid_image VARCHAR(255),
+        passport_no VARCHAR(255),
+        mobile_no VARCHAR(255),
+        cell_phone VARCHAR(255),
+        present_address TEXT,
+        permanent_address TEXT,
+        bmdc_registration_no VARCHAR(255),
+        signature_image VARCHAR(255),
+        membership_type INT, 
+        status INT
+    )";
+
+    // Execute the SQL query
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
 
 
 
@@ -125,3 +158,12 @@ function boc_pending_members_page() {
 function boc_inactive_members_page() {
     include(plugin_dir_path(__FILE__) . 'templates/inactive.php');
 }
+
+function frontend_form(){
+    ob_start();
+    include 'templates/frontend-form.php';
+    return ob_get_clean(); 
+}
+add_shortcode('frontend_registration', 'frontend_form'); 
+
+
