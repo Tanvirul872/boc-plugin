@@ -8,7 +8,7 @@
 
 
 
-include('database.php');
+include('ajax-actions.php');
 
 // Register activation hook
 register_activation_hook( __FILE__, 'create_custom_table' );
@@ -81,6 +81,17 @@ function boc_form_menu_page() {
         30 // Position of the menu item
     );
 
+
+    // Add the submenu page for manual input
+       add_submenu_page(
+        'boc-form-page',    // Parent menu slug
+        'Manual Registration',     // Page title
+        'Manual Registration',     // Menu title
+        'manage_options',   // Capability required to access the page
+        'manual-registration',     // Menu slug
+        'boc_manual_registration' // Callback function to render the page content
+    );
+
       // Add the submenu page for member list
       add_submenu_page(
         'boc-form-page',    // Parent menu slug
@@ -133,6 +144,20 @@ function boc_form_menu_page() {
         );
 
 
+        // Add the submenu page for view users data
+       add_submenu_page(
+        'boc-form-page',    // Parent menu slug
+        'Users Data',     // Page title
+        '',     // Menu title
+        'manage_options',   // Capability required to access the page
+        'view-boc-member',     // Menu slug
+        'boc_view_user_data' // Callback function to render the page content
+    );
+
+
+
+
+
 }
 add_action('admin_menu', 'boc_form_menu_page');
 
@@ -142,7 +167,9 @@ function boc_form_page_content() {
     include(plugin_dir_path(__FILE__) . 'templates/boc-form-page.php');
 }
 
-
+function boc_manual_registration() {
+    include(plugin_dir_path(__FILE__) . 'templates/manual-registration.php');
+}
 function boc_members_list_page() {
     include(plugin_dir_path(__FILE__) . 'templates/members-list.php');
 }
@@ -157,6 +184,10 @@ function boc_pending_members_page() {
 }
 function boc_inactive_members_page() {
     include(plugin_dir_path(__FILE__) . 'templates/inactive.php');
+}
+
+function boc_view_user_data() {
+    include(plugin_dir_path(__FILE__) . 'templates/view-user.php');
 }
 
 function frontend_form(){

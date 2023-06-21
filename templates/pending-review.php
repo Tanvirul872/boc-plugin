@@ -37,9 +37,6 @@ wp_head();
 
 
 
-
-
-
 <div class="wrap">
 <h2> Pending Members </h2>
 
@@ -47,115 +44,48 @@ wp_head();
     <thead>
         <tr>
             <th>Name</th>
-            <th>Age</th>
             <th>Image</th>
             <th>Date of Birth</th>
-            <th>Father's Name</th>
-            <th>Mother's Name</th>
-            <th>Nationality</th>
-            <th>Religion</th>
+            <th>Father's name</th>
+            <th>Mother's name</th>
+            <th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        <!-- Add your table rows dynamically with the data -->
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
+<tbody>
+<?php
+ global $wpdb; 
+// Define the table name with the WordPress prefix
+$table_name = $wpdb->prefix . 'boc_registration_form';
+// Retrieve rows with status = 1
+$results = $wpdb->get_results("SELECT * FROM $table_name WHERE status = 1");
+// Loop through the results and display data
+foreach ($results as $result) {
+    $member_id = $result->id;
+    $name = $result->name;
+    $image = $result->signature_image;
+    $dob = $result->dob;
+    $father = $result->father_name;
+    $mother = $result->mother_name;
 
+    // Display the data in the HTML table format
+    echo '<tr>';
+    echo '<td>' . $name . '</td>';
+    echo '<td><img src="' . $image . '" alt="Profile Image"></td>';
+    echo '<td>' . $dob . '</td>';
+    echo '<td>' . $father . '</td>';
+    echo '<td>' . $mother . '</td>';
+    echo '<td>';
+    echo '<a href="#" class="btn btn-approve member-approve"    member_id='.$member_id.'>Approve</a>';
+    echo '<a href="#" class="btn btn-reject member-reject"      member_id='.$member_id.'>Reject</a>';
+    echo '<a href="#" class="btn btn-inactive member-inactive"  member_id='.$member_id.'>Inactive</a>';
+    echo '</td>';
+    echo '</tr>';
 
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
+}
 
+?>
 
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-
-
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-
-
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-
-
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-
-
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-
-
-        <tr>
-            <td>John Doe</td>
-            <td>25</td>
-            <td><img src="path/to/image.jpg" alt="Profile Image"></td>
-            <td>1998-05-15</td>
-            <td>Michael Doe</td>
-            <td>Jane Doe</td>
-            <td>USA</td>
-            <td>Christianity</td>
-        </tr>
-        <tr>
-            <!-- Add more rows as needed -->
-        </tr>
-    </tbody>
+</tbody>
 </table>
 </div>
 

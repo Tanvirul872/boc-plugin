@@ -1,13 +1,16 @@
+
 <?php
+/*
+Template Name: Manual Registration
+*/
 wp_head(); 
 ?>
 
 
-<h2>  this is a frontend form.  </h2>
+<h2> Manual Registration </h2>
 
-
-
-<form action="#" id="boc_registration">
+<div class="wrap">
+<form action="#" id="boc_registration_manual">
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" class="form-control" id="name" name="name" >
@@ -93,17 +96,18 @@ wp_head();
     <select class="form-control" id="dropdown" name="membership_dropdown">
       <option value="list_one">Life Member</option>
       <option value="list_two">General  Member</option>
+      <option value="list_two">Associate  Member</option>
+      <option value="list_two">Honorary  Member</option>
     </select>
   </div>
   <div class="form-group">
     <label for="signature">Upload Signature Image:</label>
     <input type="file" class="form-control-file" id="signature" name="signature" accept="image/*" >
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-submit">Submit</button>
 </form>
 
+</div>
 
 
-<?php
-wp_footer();
-?>
+<?php wp_footer(); ?>

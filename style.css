@@ -20,5 +20,62 @@
     background-color: red;
     color: red;
 }
+.btn-approve {
+	background: #20a335;
+	padding: 5px;
+	color: #fff;
+}
 
+.btn-reject {
+	background: #5720a3;
+	padding: 5px;
+	color: #fff;
+}
 
+.btn-view {
+	background: #09a9f4;
+	padding: 5px;
+	color: #fff;
+}
+
+.btn-inactive {
+	background: #940d0d;
+	padding: 5px;
+	color: #fff;
+}
+
+.btn-pending {
+	background: #ded000;
+	padding: 5px;
+	color: #fff;
+}
+.btn:hover{
+    color: #fff;
+}
+.form-group label {
+	width: 268px;
+	padding-top: 10px;
+	display: flex;
+	padding-bottom: 10px;
+}
+.form-group input {
+	width: 45%;
+	padding: 10px;
+}
+.form-group textarea {
+	width: 45%;
+	padding: 10px;
+}
+.form-group select {
+	width: 45%;
+	padding: 10px;
+}
+
+.btn-submit {
+	background: #1abc1a;
+	padding: 10px 20px;
+	border-radius: 3px;
+	margin-top: 20px;
+	color: #fff;
+	font-size: 16px;
+}
