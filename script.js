@@ -7,16 +7,21 @@ $('#boc_registration').submit(function (event) {
   
     var ajax_url = plugin_ajax_object.ajax_url;
     var form = $('#boc_registration').serialize();
-    var data = {
-        'action': 'boc_registration_data',
-        'formData': form
-  
-    };
-  
+
+    var formData = new FormData ; 
+    formData.append('action','boc_registration_data') ;;
+    formData.append('signature_img', jQuery('#signature_img')[0].files[0]);
+    formData.append('boc_registration_data', form ) ;
+
+
     $.ajax({
         url: ajax_url,
-        type: 'post',
-        data: data,
+        data: formData,
+        processData:false,
+            contentType:false,
+            type:'post',
+        // data: data,
+        
         success: function(response){
           // console.log(coupon_code);
             alert('successfully store data') ;

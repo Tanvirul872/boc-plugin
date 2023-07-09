@@ -7,7 +7,7 @@ add_action( 'wp_ajax_nopriv_boc_registration_data', 'boc_registration_data' );
 function boc_registration_data(){
 
     $formFields = [];
-    wp_parse_str($_POST['formData'], $formFields); 
+    wp_parse_str($_POST['boc_registration_data'], $formFields); 
     // print_r($formFields) ; 
 
   // Sanitize and prepare the form data
@@ -32,8 +32,38 @@ function boc_registration_data(){
   $present_address = sanitize_text_field($formFields['present_address']);
   $permanent_address = sanitize_text_field($formFields['permanent_address']);
   $bmdc_registration_no = absint($formFields['bmdc_registration_no']);
-  $signature_img = $formFields['signature'];
+  // $signature_img = $formFields['signature'];
   $membership_dropdown = $formFields['membership_dropdown'];
+
+print_r($_POST['signature_img']) ;  
+
+
+
+$attachment = '';
+  
+if (file_exists($_FILES['signature_img']['tmp_name'])) {
+
+  if (!function_exists('wp_handle_upload')) {
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
+    require_once(ABSPATH . 'wp-admin/includes/noop.php');
+  }
+
+  $uploadedfile = $_FILES['signature_img'];
+  $upload_overrides = array('test_form' => false);
+  $movefile = wp_handle_upload($uploadedfile, $upload_overrides);
+  if ($movefile) {
+    $attachment = $movefile ['url'];
+    $explodeArray = explode('wp-content', $attachment);                   
+    $attachment = get_home_url() . '/wp-content' . $explodeArray[1];
+
+  }
+}
+
+
+print_r($attachment) ;
+
+  
+
 
 
 
@@ -63,7 +93,7 @@ function boc_registration_data(){
     'present_address' => $present_address,
     'permanent_address' => $permanent_address,
     'bmdc_registration_no' => $bmdc_registration_no,
-    'signature_image' => $signature_img,
+    'signature_image' => $attachment,
     'status' => 1,
    
     // ... continue adding other form fields

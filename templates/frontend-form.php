@@ -7,7 +7,7 @@ wp_head();
 
 
 
-<form action="#" id="boc_registration">
+<form action="#" id="boc_registration" enctype="multipart/form-data">
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" class="form-control" id="name" name="name" >
@@ -97,7 +97,7 @@ wp_head();
   </div>
   <div class="form-group">
     <label for="signature">Upload Signature Image:</label>
-    <input type="file" class="form-control-file" id="signature" name="signature" accept="image/*" >
+    <input type="file" class="form-control-file" id="signature_img" name="signature" accept="image/*" >
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
