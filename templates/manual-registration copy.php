@@ -1,16 +1,23 @@
+
 <?php
+/*
+Template Name: Manual Registration
+*/
 wp_head(); 
-?>
+?>         
 
 
-<h2>  this is a frontend form.  </h2>
+<h2> Manual Registration </h2>
 
-<form action="#" id="boc_registration" enctype="multipart/form-data">
+<div class="wrap">
+<form action="#" id="boc_registration_manual">
+
+
+
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" class="form-control" id="name" name="name" >
   </div>
-  
   <div class="form-group">
     <label for="dob">Date of Birth:</label>
     <input type="date" class="form-control" id="dob" name="dob" >
@@ -89,40 +96,21 @@ wp_head();
   </div>
   <div class="form-group">
     <label for="dropdown">Membership Dropdown:</label>
-    <select class="form-control" id="membership_dropdown" name="membership_dropdown">
-      <option value="1">Life Member</option>
-      <option value="2">General Member</option>
+    <select class="form-control" id="dropdown" name="membership_dropdown">
+      <option value="list_one">Life Member</option>
+      <option value="list_two">General  Member</option>
+      <option value="list_two">Associate  Member</option>
+      <option value="list_two">Honorary  Member</option>
     </select>
   </div>
   <div class="form-group">
     <label for="signature">Upload Signature Image:</label>
-    <input type="file" class="form-control-file" id="signature_img" name="signature" accept="image/*" >
+    <input type="file" class="form-control-file" id="signature" name="signature" accept="image/*" >
   </div>
-  <div class="form-group">
-    <label for="signature">Upload Your Image:</label>
-    <input type="file" class="form-control-file" id="personal_img" name="personal_img" accept="image/*" >
-  </div>
-
-
-
-  <h1>Educational Qualification</h1>
-  <div class="educational_qualification">
-      <input type="text" name="edu_degree[]" id="edu_degree" placeholder="Degree" >
-      <input type="text" name="edu_year[]" id="edu_year"  placeholder="Year">
-      <input type="text" name="edu_institute[]" id="edu_institute"  placeholder="Institution" > 
-      <input type="file" name="edu_certificate[]" class="edu_certificate" accept="image/*" multiple> 
-    <button id="extend">Add</button>
-
-    <div id="extend-field"></div>
-  </div>
-
-  
-
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-submit">Submit</button>
 </form>
 
+</div>
 
 
-<?php
-wp_footer();
-?>
+<?php wp_footer(); ?>

@@ -5,20 +5,18 @@
  * Version: 1.0.0
  * Author: Tanvirul Karim
  */
-
+ 
 
 
 include('ajax-actions.php');
-
+ 
 // Register activation hook
 register_activation_hook( __FILE__, 'create_custom_table' );
 
 // Function to create the custom table
 function create_custom_table() {
     global $wpdb;
-
     $table_name = $wpdb->prefix . 'boc_registration_form';
-
     // SQL query to create the table
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +41,9 @@ function create_custom_table() {
         permanent_address TEXT,
         bmdc_registration_no VARCHAR(255),
         signature_image VARCHAR(255),
-        membership_type INT, 
+        personal_img VARCHAR(255),
+        membership_type VARCHAR(255),
+        educational_qualification LONGTEXT NOT NULL,   
         status INT
     )";
 
@@ -53,14 +53,15 @@ function create_custom_table() {
 }
 
 
-
 add_action('wp_enqueue_scripts','plugin_css_jsscripts');
 function plugin_css_jsscripts() {
     // CSS
     wp_enqueue_style( 'style-css', plugins_url( '/style.css', __FILE__ ));
+    wp_enqueue_style( 'bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' );
 
     // JavaScript
     wp_enqueue_script( 'script-js', plugins_url( '/script.js', __FILE__ ),array('jquery'));
+    wp_enqueue_script( 'bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.5.3', true );
 
     // Pass ajax_url to script.js
     wp_localize_script( 'script-js', 'plugin_ajax_object',
@@ -198,3 +199,10 @@ function frontend_form(){
 add_shortcode('frontend_registration', 'frontend_form'); 
 
 
+
+function show_life_member(){
+    ob_start();
+    include 'templates/life-member.php';
+    return ob_get_clean(); 
+}
+add_shortcode('show_life_member_shortcode', 'show_life_member'); 

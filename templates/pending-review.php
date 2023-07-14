@@ -63,6 +63,8 @@ foreach ($results as $result) {
     $member_id = $result->id;
     $name = $result->name;
     $image = $result->signature_image;
+    $nid_image = $result->nid_image;
+    $personal_img = $result->personal_img;
     $dob = $result->dob;
     $father = $result->father_name;
     $mother = $result->mother_name;
@@ -70,7 +72,9 @@ foreach ($results as $result) {
     // Display the data in the HTML table format
     echo '<tr>';
     echo '<td>' . $name . '</td>';
-    echo '<td><img src="' . $image . '" alt="Profile Image"></td>';
+    // echo '<td><img class="profile_image" src="' . $image . '"height="20px"  width="20px"  alt="Profile Image"></td>';
+    // echo '<td><img class="profile_image" src="' . $nid_image . '"height="20px"  width="20px"  alt="Profile Image"></td>';
+    echo '<td><img class="profile_image" src="' . $personal_img . '"height="20px"  width="20px"  alt="Profile Image"></td>';
     echo '<td>' . $dob . '</td>';
     echo '<td>' . $father . '</td>';
     echo '<td>' . $mother . '</td>';
