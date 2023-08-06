@@ -48,16 +48,17 @@ $('#boc_registration').submit(function (event) {
         // data: data,
         
         success: function(response){
-          // console.log(coupon_code);
+          console.log(response); 
+          $("#sslcomerze-pay").removeAttr("style");
+          $("#sslcomerze-pay").attr("href", response);
             alert('successfully store data') ;
+
         }
     });
   }     
   
-  
-
-  
   });
+
 
 
   // manual registration from admin dashboard 
@@ -112,15 +113,45 @@ $('#boc_registration').submit(function (event) {
     });
   }     
   
-
-
+  
+  });
 
 
 
 
 
   
+//save settings to database 
+$('#boc_settings_form').submit(function (event) {
+  event.preventDefault();
+  alert('boc_settings_form') 
+
+  var ajax_url = plugin_ajax_object.ajax_url;     
+  // Get the educational certificate files
+
+  var form = $('#boc_settings_form').serialize();
+  var formData = new FormData ;  
+  formData.append('action','boc_settings_form') ;;
+  formData.append('boc_settings_form', form ) ;
+
+
+  console.log(formData) ;
+
+  $.ajax({
+      url: ajax_url,
+      data: formData,
+      processData:false,
+      contentType:false,
+      type:'post',
+      // data: data,
+      
+      success: function(response){
+          alert('successfully store settings data') ;             
+      }
   });
+    
+
+});
 
 
 
@@ -194,13 +225,8 @@ $('#boc_registration').submit(function (event) {
 })
 
 
-
-
 // add new item in form 
 
-
-
-	
 	$("#extend").click(function(e){
 		e.preventDefault();
 		// $("#extend-field").append('<div><input type="text"><a class="add-text-field"><button>+</button></a><a class="remove-extend-field"><button>-</button></a>');

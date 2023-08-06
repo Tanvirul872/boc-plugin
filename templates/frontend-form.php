@@ -116,9 +116,10 @@ wp_head();
     <div id="extend-field"></div>
   </div>
 
-  
-
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="#" class="btn ssl-pay" id="sslcomerze-pay" style="display:none;" >Pay</a>
+
+
 </form>
 
 

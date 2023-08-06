@@ -1,6 +1,6 @@
 <?php wp_head(); ?>
 
-<h2>  this is a page for life member  </h2>
+<h2>  this is a page for general member  </h2>
 
 <div class="container-fluid">
 
@@ -15,6 +15,7 @@
      $current_page = get_post(get_the_ID());
      $current_slug = $current_page->post_name;
      $running_url = home_url().'/'.$current_slug ; 
+     
    ?>
   <a href="<?php echo  $running_url ; ?>" class="btn btn-success">Reset</a>
 </div>
@@ -43,7 +44,7 @@ if (!empty($search_doc)) {
     $results = $wpdb->get_results(
         $wpdb->prepare(
             "SELECT * FROM $table_name 
-            WHERE (status = 3 AND membership_type = 1) 
+            WHERE (status = 3 AND membership_type = 2) 
             AND (name LIKE '%%%s%%' OR member_id LIKE '%%%s%%') 
             LIMIT %d OFFSET %d",
             $search_doc, // Search for the value of $search_doc in the field_name column
@@ -54,14 +55,9 @@ if (!empty($search_doc)) {
     );
 } else {
     // If $search_doc is empty, retrieve rows with status = 3 and membership_type = 1 without any filtering
-    $results = $wpdb->get_results("SELECT * FROM $table_name WHERE status = 3 AND membership_type = 1 LIMIT $items_per_page OFFSET $offset");
-}
-
-
+    $results = $wpdb->get_results("SELECT * FROM $table_name WHERE status = 3 AND membership_type = 2 LIMIT $items_per_page OFFSET $offset");
+}  
   // Loop through the results and display data
-  if($results){
-
-  
   foreach ($results as $result) {
 
     $name = $result->name;
@@ -86,17 +82,13 @@ if (!empty($search_doc)) {
         </div>
       </div>
     </div>
-  <?php } }else { ?>
-
-     <p> No Member found</p>
-
- <?php } ?>
+  <?php } ?>
 
 </div>
 
 <?php
 // Calculate the total number of items
-$total_items = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 3 AND membership_type = 1");
+$total_items = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 3 AND membership_type = 2");
 // Calculate the total number of pages
 $total_pages = ceil($total_items / $items_per_page);
 // Define the pagination base URL

@@ -53,6 +53,40 @@ function create_custom_table() {
 }
 
 
+
+
+// Register activation hook
+register_activation_hook( __FILE__, 'create_boc_settings_table' );
+// Function to create the settings table
+function create_boc_settings_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'boc_settings';
+    // SQL query to create the table
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+
+        direct_api_url VARCHAR(255),
+        store_id VARCHAR(255),
+        store_passwd VARCHAR(255),
+        total_amount VARCHAR(255),
+        success_url VARCHAR(255),
+        fail_url VARCHAR(255),
+        cancel_url VARCHAR(255),             
+        ship_name VARCHAR(255),
+        status INT
+                     
+    )";
+
+    // Execute the SQL query
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
+
+
+
+
+
+
 add_action('wp_enqueue_scripts','plugin_css_jsscripts');
 function plugin_css_jsscripts() {
     // CSS
@@ -74,7 +108,7 @@ function plugin_css_jsscripts() {
 function boc_form_menu_page() {
     add_menu_page(
         'BOC Form',          // Page title
-        'BOC Form',          // Menu title
+        'BOC Form' ,          // Menu title
         'manage_options',    // Capability required to access the page
         'boc-form-page',     // Menu slug
         'boc_form_page_content', // Callback function to render the page content
@@ -206,3 +240,143 @@ function show_life_member(){
     return ob_get_clean(); 
 }
 add_shortcode('show_life_member_shortcode', 'show_life_member'); 
+
+
+function show_general_member(){
+    ob_start();
+    include 'templates/general-member.php';
+    return ob_get_clean(); 
+}
+add_shortcode('show_general_member_shortcode', 'show_general_member'); 
+
+
+
+
+function show_member_details_frontend($templates) {
+    $templates['member-details.php'] = 'Member Details';
+    return $templates;
+}
+add_filter('theme_page_templates', 'show_member_details_frontend');
+
+
+function show_member_details_frontend_shortcode($atts) {
+    ob_start();
+    include(plugin_dir_path(__FILE__) . 'templates/member-details.php');
+    return ob_get_clean();
+}
+
+add_shortcode('member_details_shortcode', 'show_member_details_frontend_shortcode');
+
+
+
+// smtp details 
+
+function mailtrap($phpmailer) {
+    $phpmailer->isSMTP();
+    $phpmailer->Host = 'smtp.mailtrap.io';
+    $phpmailer->SMTPAuth = true;
+    $phpmailer->Port = 2525;
+    $phpmailer->Username = '6e380d75012caa';
+    $phpmailer->Password = '3a6c7363c5dc8f';
+  }
+  
+  add_action('phpmailer_init', 'mailtrap');
+
+
+
+
+
+  function sslcommerz_payment_handler() {
+ 
+    // ssl
+    /* PHP */
+    $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v3/api.php";
+    // Prepare the data to be sent in the POST request
+    $post_data = array(
+        'store_id' => "anmta64c0f40b25788",
+        'store_passwd' => "anmta64c0f40b25788@ssl",
+        'total_amount' => "20000",
+        'currency' => "BDT",
+        'tran_id' => "SSLCZ_TEST_" . uniqid(),
+        'success_url' => "http://www.packetbd.com/wp_test/success/",
+        'fail_url' => "http://www.packetbd.com/wp_test/fail/",
+        'cancel_url' => "http://www.packetbd.com/wp_test/cancel/",
+        'emi_option' => "1",
+        'emi_max_inst_option' => "9",
+        'emi_selected_inst' => "9",
+        'cus_name' => "Test Customer",
+        'cus_email' => "test@test.com",
+        'cus_add1' => "Dhaka",
+        'cus_add2' => "Dhaka",
+        'cus_city' => "Dhaka",
+        'cus_state' => "Dhaka",
+        'cus_postcode' => "1000",
+        'cus_country' => "Bangladesh",
+        'cus_phone' => "01711111111",
+        'cus_fax' => "01711111111",
+        'ship_name' => "testanmtam1gp",
+        'ship_add1' => "Dhaka",
+        'ship_add2' => "Dhaka",
+        'ship_city' => "Dhaka",
+        'ship_state' => "Dhaka",
+        'ship_postcode' => "1000",
+        'ship_country' => "Bangladesh",
+        'value_a' => "ref001",
+        'value_b' => "ref002",
+        'value_c' => "ref003",
+        'value_d' => "ref004",
+        'cart' => json_encode(array(
+            array("product" => "DHK TO BRS AC A1", "amount" => "200.00"),
+            array("product" => "DHK TO BRS AC A2", "amount" => "200.00"),
+            array("product" => "DHK TO BRS AC A3", "amount" => "200.00"),
+            array("product" => "DHK TO BRS AC A4", "amount" => "200.00")
+        )),
+        'product_amount' => "100",
+        'vat' => "5",
+        'discount_amount' => "5",
+        'convenience_fee' => "3"
+    );
+
+    // Send the API request using wp_remote_post()
+    $response = wp_remote_post($direct_api_url, array(
+        'method' => 'POST',
+        'body' => $post_data,
+        'timeout' => 30,
+        'sslverify' => false, // KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+    ));
+
+    // Check for errors and process the response
+    if (!is_wp_error($response) && $response['response']['code'] == 200) {
+        $sslcommerzResponse = $response['body'];
+        // Process the response here as needed
+        // Example: json_decode($sslcommerzResponse, true);
+    } else {
+        echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
+        exit;
+    }
+
+
+# PARSE THE JSON RESPONSE
+$sslcz = json_decode($sslcommerzResponse, true );
+
+if(isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL']!="" ) {
+        # THERE ARE MANY WAYS TO REDIRECT - Javascript, Meta Tag or Php Header Redirect or Other
+        # echo "<script>window.location.href = '". $sslcz['GatewayPageURL'] ."';</script>";
+	echo "<meta http-equiv='refresh' content='0;url=".$sslcz['GatewayPageURL']."'>";
+	# header("Location: ". $sslcz['GatewayPageURL']);
+	exit;
+} else {
+	echo "JSON Data parsing error!";
+}
+
+
+
+
+
+    ob_start();
+    ?>
+    <!-- Your HTML/JS code for the payment button or form goes here -->
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('sslcommerz_payment', 'sslcommerz_payment_handler');

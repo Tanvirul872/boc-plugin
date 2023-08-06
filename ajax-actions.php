@@ -6,6 +6,11 @@ add_action( 'wp_ajax_boc_registration_data', 'boc_registration_data' );
 add_action( 'wp_ajax_nopriv_boc_registration_data', 'boc_registration_data' );
 function boc_registration_data(){
 
+
+  //  shortcode of sslcommerze
+  //  do_shortcode('[sslcommerz_payment]') ;
+
+
     $formFields = [];
     wp_parse_str($_POST['boc_registration_data'], $formFields); 
     // print_r($formFields) ; 
@@ -42,6 +47,7 @@ function boc_registration_data(){
 
 
   // print_r($edu_certificates); 
+
 
 
   $attachment_urls = [];
@@ -93,24 +99,10 @@ function boc_registration_data(){
   }
 
   
-
-  
   // Output the restructured array
-
   $edu_qualification = json_encode($edu_qualifications) ; 
 
-  $jsonData = '[["degree 1","year 1 ","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/rose-flower-flowers-red-rose-royalty-free-thumbnail-70.jpg"],["","year 1 ","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/WIN_20230709_21_40_37_Pro-150.jpg"],["degree 1","","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/rose-flower-flowers-red-rose-royalty-free-thumbnail-71.jpg"]]';
-
-// Decode the JSON data
-$data111 = json_decode($jsonData, true);
-
-
-print_r($data111) ; 
-  
-
-
 $attachment = '';
-  
 if (file_exists($_FILES['signature_img']['tmp_name'])) {
 
   if (!function_exists('wp_handle_upload')) {
@@ -172,13 +164,6 @@ if (file_exists($_FILES['personal_img']['tmp_name'])) {
 
 
 
-
-
-  
-
-
-
-
   $randomNumber = mt_rand(100000, 999999);
   // Define the table name with the WordPress prefix
   $table_name = $wpdb->prefix . 'boc_registration_form';
@@ -216,7 +201,115 @@ if (file_exists($_FILES['personal_img']['tmp_name'])) {
 
   // Insert data into the custom table
   $wpdb->insert($table_name, $data); 
-  
+
+
+
+
+  // send mail for confirmation 
+
+$to = 'anmtanvir872@gmail.com' ; 
+$subject = 'Subject';
+// $body = $formdata['temp_desc'];
+$headers[] = 'Content-type: text/html; charset=utf-8';
+$headers[] = 'From:' . "testing@gmail.com";
+
+
+    //Message
+    $message = "Your registration is successful.Your registration number is ".$randomNumber;
+
+    // foreach ($formdata as $index => $field) {
+    //     $message .= '<strong>' . $index . '</strong> :' . $field . '<br/>';
+    // }
+
+$test = wp_mail( $to , $subject, $message, $headers );
+
+
+// sslcommerze code start 
+
+$direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v3/api.php";
+// Prepare the data to be sent in the POST request
+$post_data = array(
+    'store_id' => "anmta64c0f40b25788",
+    'store_passwd' => "anmta64c0f40b25788@ssl",
+    'total_amount' => "20000",
+    'currency' => "BDT",
+    'tran_id' => "SSLCZ_TEST_" . uniqid(),
+    'success_url' => "http://www.packetbd.com/wp_test/success/",
+    'fail_url' => "http://www.packetbd.com/wp_test/fail/",
+    'cancel_url' => "http://www.packetbd.com/wp_test/cancel/",
+    // 'emi_option' => "1",
+    // 'emi_max_inst_option' => "9",
+    // 'emi_selected_inst' => "9",
+    'cus_name' => $name,
+    'cus_email' => $email ,
+    // 'cus_add1' => "Dhaka",
+    // 'cus_add2' => "Dhaka",
+    // 'cus_city' => "Dhaka",
+    // 'cus_state' => "Dhaka",
+    // 'cus_postcode' => "1000",
+    'cus_country' => "Bangladesh",
+    'cus_phone' => $mobile,
+    // 'cus_fax' => "01711111111",
+    'ship_name' => "testanmtam1gp",
+    // 'ship_add1' => "Dhaka",
+    // 'ship_add2' => "Dhaka",
+    // 'ship_city' => "Dhaka",
+    // 'ship_state' => "Dhaka",
+    // 'ship_postcode' => "1000",
+    // 'ship_country' => "Bangladesh",
+    // 'value_a' => "ref001",
+    // 'value_b' => "ref002",
+    // 'value_c' => "ref003",
+    // 'value_d' => "ref004",
+    // 'cart' => json_encode(array(
+    //     array("product" => "DHK TO BRS AC A1", "amount" => "200.00"),
+    //     array("product" => "DHK TO BRS AC A2", "amount" => "200.00"),
+    //     array("product" => "DHK TO BRS AC A3", "amount" => "200.00"),
+    //     array("product" => "DHK TO BRS AC A4", "amount" => "200.00")
+    // )),
+    // 'product_amount' => "100",
+    // 'vat' => "5",
+    // 'discount_amount' => "5",
+    // 'convenience_fee' => "3"
+);
+
+// Send the API request using wp_remote_post()
+$response = wp_remote_post($direct_api_url, array(
+    'method' => 'POST',
+    'body' => $post_data,
+    'timeout' => 30,
+    'sslverify' => false, // KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+));
+
+// Check for errors and process the response
+if (!is_wp_error($response) && $response['response']['code'] == 200) {
+    $sslcommerzResponse = $response['body'];
+    // Process the response here as needed
+    // Example: json_decode($sslcommerzResponse, true);
+} else {
+    echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
+    exit;
+}
+
+
+# PARSE THE JSON RESPONSE
+$sslcz = json_decode($sslcommerzResponse, true );
+
+
+if(isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL']!="" ) {
+   wp_send_json($sslcz['GatewayPageURL']) ;
+  //  echo "<meta http-equiv='refresh' content='0;url=".$sslcz['GatewayPageURL']."'>";
+  # header("Location: ". $sslcz['GatewayPageURL']);
+exit;
+} else {
+echo "JSON Data parsing error!";
+}
+    
+// sslcommerze code end 
+
+
+wp_die() ;
+
 }
 
 
@@ -233,7 +326,7 @@ function boc_registration_data_manual(){
 
   $formFields = [];
   wp_parse_str($_POST['boc_registration_data_manual'], $formFields); 
-  print_r($formFields) ; 
+  // print_r($formFields) ; 
 
 // Sanitize and prepare the form data
 global $wpdb;
@@ -323,13 +416,7 @@ for ($i = 0; $i < count($edu_degrees); $i++) {
 
 $edu_qualification = json_encode($edu_qualifications) ; 
 
-$jsonData = '[["degree 1","year 1 ","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/rose-flower-flowers-red-rose-royalty-free-thumbnail-70.jpg"],["","year 1 ","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/WIN_20230709_21_40_37_Pro-150.jpg"],["degree 1","","institute 1 ","http:\/\/localhost\/wp_test\/wp-content\/uploads\/2023\/07\/rose-flower-flowers-red-rose-royalty-free-thumbnail-71.jpg"]]';
 
-// Decode the JSON data
-$data111 = json_decode($jsonData, true);
-
-
-print_r($data111) ; 
 
 
 
@@ -522,6 +609,95 @@ $wpdb->insert($table_name, $data);
 
 
 }
+
+
+
+
+
+// save manual registration data to database 
+add_action( 'wp_ajax_boc_settings_form', 'boc_settings_form' );
+add_action( 'wp_ajax_nopriv_boc_settings_form', 'boc_settings_form' );
+function boc_settings_form(){
+
+
+  $formFields = [];
+  wp_parse_str($_POST['boc_settings_form'], $formFields); 
+  print_r($formFields) ; 
+
+// Sanitize and prepare the form data
+global $wpdb;
+
+$direct_api_url = $formFields['direct_api_url'];
+$store_id = $formFields['store_id']; 
+
+$store_passwd = sanitize_text_field($formFields['store_passwd']);
+$total_amount = sanitize_text_field($formFields['total_amount']);
+$success_url = sanitize_text_field($formFields['success_url']);
+$fail_url = sanitize_text_field($formFields['fail_url']);
+$cancel_url = sanitize_text_field($formFields['cancel_url']);
+$ship_name = sanitize_text_field($formFields['ship_name']);
+
+// Define the table name with the WordPress prefix
+$table_name = $wpdb->prefix . 'boc_settings';
+
+// Prepare data array for insertion/update
+$data = array(
+  'id' => 1, // Assuming 1 is the primary key value of the row you want to update
+  'direct_api_url' => $direct_api_url,
+  'store_id' => $store_id,
+  'store_passwd' => $store_passwd,
+  'total_amount' => $total_amount,
+  'success_url' => $success_url,
+  'fail_url' => $fail_url,
+  'cancel_url' => $cancel_url,
+  'ship_name' => $ship_name,
+  'status' => 1,
+  // ... continue adding other form fields
+);
+
+// Prepare format for data types (%s for string, %d for integer, etc.)
+$data_formats = array(
+  '%d', // Assuming 'id' is an integer
+  '%s',
+  '%d',
+  '%s',
+  '%d',
+  '%s',
+  '%s',
+  '%s',
+  '%s',
+  '%d', // Assuming 'status' is an integer
+
+);
+
+// Check if there are any data in the table
+$count_query = "SELECT COUNT(*) FROM $table_name";
+$count = $wpdb->get_var($count_query);
+
+if ($count > 0) {
+  // Data exists, perform an update
+  $wpdb->replace($table_name, $data, $data_formats);
+} else {
+  // No data exists, perform an insert
+  $wpdb->insert($table_name, $data, $data_formats);
+}
+
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
