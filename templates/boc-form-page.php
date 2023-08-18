@@ -100,7 +100,7 @@ if($results ){
     </div> 
     <!-- item end  -->
 
-    <input type="submit" value="submit">
+    <input class="boc-settings-submit" type="submit" value="submit">
 
 </div>
 

@@ -87,11 +87,11 @@
 	text-transform: uppercase;
   }
   
-  /* Add a hover effect on buttons */
-  .btn:hover {
-	opacity: 0.8; /* Slightly reduce opacity on hover */
-  }
-  
+
+.btn:hover {
+	opacity: 0.8; 
+}
+
 .btn:hover{
     color: #fff;
 }
@@ -123,37 +123,36 @@
 	font-size: 16px;
 }
 
-.profile_image{
-	height:50px;
-	width:50px; 
-}
+
 
 .pagination{margin-top: 20px;}
 .pagination .page-numbers {
 	display: inline-block;
-	padding: 8px 12px;
-	background-color: green; 
-	color: white; 
-	text-decoration: none;
-	border-radius: 4px;
-	margin-right: 5px; 
+	padding: 8px 12px !important;
+	background-color: green !important; 
+	color: white !important; 
+	text-decoration: none !important;
+	border-radius: 4px !important;
+	margin-right: 5px !important; 
   }
   .pagination .page-numbers.current {
-	font-weight: bold;
+	font-weight: bold !important;
+	background-color: darkgreen !important;
   }
   .pagination .page-numbers.next {
-	background-color: green;
-	color: #fff;
-	font-weight: bold;
+	background-color: green !important;
+	color: #fff !important;
+	font-weight: bold !important;
   }
   .pagination .page-numbers,
   .pagination .page-numbers.next {
 	text-decoration: none;
   }
   .pagination .page-numbers:hover {
-	background-color: darkgreen; 
-	color: #fff;
+	background-color: darkgreen !important; 
+	color: #fff !important;
   }
+
   .wp-list-table a:hover{
 	color:#fff ;
   }
@@ -161,4 +160,158 @@
 .pending_mem_table .btn-approve , .pending_mem_table .btn-reject , .pending_mem_table .btn-inactive{
     padding: 5px;
     border-radius: 10px;
+}
+
+.boc-settings-box {
+	background-color: #f7f7f7;
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 15px;
+  }
+  
+.boc-settings-box label {
+	font-weight: bold;
+  }
+  
+  .boc-settings-box input[type="text"] {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-top: 5px;
+	box-sizing: border-box;
+  }
+
+  .boc-settings-box input[type="text"]:focus {
+	outline: none;
+	border-color: #09a9f4; 
+  }
+  .boc-settings-submit {
+    background: green;
+    border: none;
+    color: #fff;
+    padding: 5px 25px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+#boc_registration_manual .form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#extend {
+    background: darkgreen;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+}
+.add-text-field button ,.remove-extend-field button  {
+    background: darkgreen !important;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+}
+
+.manual_submit {
+    background: green !important;
+    border: none !important;
+    margin-top: 10px !important;
+    font-weight: bold !important;
+}
+
+
+
+              
+.view_user_table {
+width: 100%;
+border-collapse: collapse;
+margin-bottom: 20px;
+}
+  
+.wp-list-table th, .wp-list-table td {
+    padding: 15px 10px;
+    border: 1px solid #ccc;
+}
+  
+  .wp-list-table th {
+	background-color: #f1f1f1;
+	text-align: left;
+	font-weight: bold;
+  }
+  
+  /* .wp-list-table img.profile_image {
+	max-width: 100px;
+	max-height: 100px;
+  } */
+  
+  .wp-list-table .edu-qualification {
+	font-weight: bold;
+	margin-bottom: 10px;
+  }
+  .wp-list-table .edu-details {
+	margin-left: 20px;
+  }
+  .wp-list-table .edu-details br {
+	margin-bottom: 10px;
+  }
+  .wp-list-table td span {
+    font-weight: bold;
+    font-size: 15px;
+	text-transform: capitalize;
+}
+
+.educational_qualification {
+    display: flex;
+}
+.add_new_fields {
+    padding: 10px;
+    height: 45px;
+}
+#boc_registration textarea {
+    width: 100%;
+}
+a#sslcomerze-pay {
+    background: blue;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.profile_image:focus {
+	width: 1024px;
+	height: 1024px;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	cursor: -moz-zoom-out;
+	cursor: zoom-out;
+}
+
+.profile_frontend{
+	height:400px;
+	width:400px; 
+}
+.member_img{
+	height:200px;
+	width:200px !important;
+}
+.input-group-append input {
+    background: green;
+    padding: 16px 15px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+
+
+.edit_image{ 
+	height:50px;
+	width:50px; 
+	margin-right:10px;
 }

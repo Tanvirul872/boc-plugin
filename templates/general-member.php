@@ -1,5 +1,11 @@
 <?php wp_head(); ?>
 
+
+
+<section class="frontend_general_member">
+
+
+
 <h2>  this is a page for general member  </h2>
 
 <div class="container-fluid">
@@ -17,7 +23,7 @@
      $running_url = home_url().'/'.$current_slug ; 
      
    ?>
-  <a href="<?php echo  $running_url ; ?>" class="btn btn-success">Reset</a>
+  <!-- <a href="<?php // echo  $running_url ; ?>" class="btn btn-success">Reset</a> -->
 </div>
 </form>
 
@@ -59,25 +65,21 @@ if (!empty($search_doc)) {
 }  
   // Loop through the results and display data
   foreach ($results as $result) {
-
     $name = $result->name;
     $personal_img = $result->personal_img;
     $mobile_no = $result->mobile_no;
     $present_designation = $result->present_designation;
     $member_id = $result->id;
-
     $view_link = get_permalink() . 'member-details?id=' . $member_id;                     
-   
     ?>
     <div class="col-md-6">
-      <div class="card">
-         
+      <div class="card text-center">
       <a href="<?php echo $view_link ; ?>">
-        <img src="<?php echo $personal_img; ?>" class="card-img-top" alt="profile_image">
-        <div class="card-body">
+        <img src="<?php echo $personal_img; ?>" class="card-img-top member_img" alt="profile_image">
+        <div class="card-body text-center">
           <h5 class="card-title"><?php echo $name; ?></h5>
-          <p class="card-text"><?php echo $present_designation; ?></p>
-          <p class="card-text"><?php echo $mobile_no; ?></p>
+          <p class="card-text text-center"><?php echo $present_designation; ?></p>
+          <p class="card-text text-center"><?php echo $mobile_no; ?></p>
        </a>
         </div>
       </div>
@@ -104,12 +106,12 @@ $pagination_links = paginate_links(array(
 ));
 // Display the pagination links
 if ($pagination_links) {
-  echo '<div class="pagination">' . $pagination_links . '</div>';
+  echo '<div class="pagination pagination_frontend">' . $pagination_links . '</div>';
 }
 ?>
 
 </div>
 
-
+</section>
 
 <?php wp_footer(); ?>

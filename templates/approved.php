@@ -51,6 +51,7 @@ wp_head();
             <th>Father's name</th>
             <th>Mother's name</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
     </thead>
 <tbody>
@@ -82,7 +83,7 @@ foreach ($results as $result) {
 
 
    $view_link = admin_url('admin.php?page=view-boc-member').'&id='.$member_id; 
-
+   $edit_link = admin_url('admin.php?page=edit-boc-member').'&id='.$member_id; 
 
 
     // Display the data in the HTML table format
@@ -93,9 +94,11 @@ foreach ($results as $result) {
     echo '<td>' . $father . '</td>';
     echo '<td>' . $mother . '</td>';
     echo '<td>';
-    echo '<a href="#" class="btn-approve">Approved</a>';
+    // echo '<a href="#" class="btn-approve">Approved</a>';
+    echo '<a href="'.$edit_link.'" class="btn-approve" member_id='.$member_id.'>Edit</a>'; 
     echo '<a href="'.$view_link.'" class="btn-view" member_id='.$member_id.'>View</a>'; 
     echo '</td>';
+    echo '<td><a href="#" class="btn-inactive make_inactive" id="'. $member_id .'">Make Inactive</a></td>';
     echo '</tr>';
 }
 

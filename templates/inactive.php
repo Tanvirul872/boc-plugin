@@ -46,6 +46,7 @@ wp_head();
             <th>Father's name</th>
             <th>Mother's name</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
     </thead>
 <tbody>
@@ -68,6 +69,7 @@ $results = $wpdb->get_results("SELECT * FROM $table_name WHERE status = 2 LIMIT 
 // $results = $wpdb->get_results("SELECT * FROM $table_name WHERE status = 2");
 // Loop through the results and display data
 foreach ($results as $result) {
+    $id = $result->id;
     $name = $result->name;
     $image = $result->signature_image;
     $dob = $result->dob;
@@ -84,6 +86,7 @@ foreach ($results as $result) {
     echo '<td>';
     echo '<a href="#" class="btn-inactive">Inactive</a>';
     echo '</td>';
+    echo '<td><a href="#" class="btn-inactive make_active" id="'. $id .'">Make Active</a></td>';
     echo '</tr>';
 }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: BOC Form
+ * Plugin Name: BOS Member Form
  * Description: A plugin for creating custom forms for BOC.
  * Version: 1.0.0
  * Author: Tanvirul Karim
@@ -9,6 +9,7 @@
 
 
 include('ajax-actions.php');
+include('import-csv.php');
  
 // Register activation hook
 register_activation_hook( __FILE__, 'create_custom_table' );
@@ -66,7 +67,7 @@ function create_boc_settings_table() {
         id INT AUTO_INCREMENT PRIMARY KEY,
 
         direct_api_url VARCHAR(255),
-        store_id VARCHAR(255),
+        store_id VARCHAR(255),   
         store_passwd VARCHAR(255),
         total_amount VARCHAR(255),
         success_url VARCHAR(255),
@@ -107,8 +108,8 @@ function plugin_css_jsscripts() {
 // Add the BOC Form menu page
 function boc_form_menu_page() {
     add_menu_page(
-        'BOC Form',          // Page title
-        'BOC Form' ,          // Menu title
+        'BOS Form',          // Page title
+        'BOS Member Form' ,          // Menu title
         'manage_options',    // Capability required to access the page
         'boc-form-page',     // Menu slug
         'boc_form_page_content', // Callback function to render the page content
@@ -187,14 +188,38 @@ function boc_form_menu_page() {
         'manage_options',   // Capability required to access the page
         'view-boc-member',     // Menu slug
         'boc_view_user_data' // Callback function to render the page content
-    );
+         );
+
+
+       // Add the submenu page for edit users data
+       add_submenu_page(
+        'boc-form-page',    // Parent menu slug
+        'Edit Users Data',     // Page title
+        '',     // Menu title
+        'manage_options',   // Capability required to access the page
+        'edit-boc-member',     // Menu slug
+        'boc_edit_user_data' // Callback function to render the page content
+         );
 
 
 
-
+        // Add the submenu page for inactive member list
+    add_submenu_page(
+        'boc-form-page',    // Parent menu slug
+        'CSV Import',     // Page title
+        'CSV Import',     // Menu title
+        'manage_options',   // Capability required to access the page
+        'boc-csv-import',     // Menu slug
+        'handle_csv_import' // Callback function to render the page content
+    );    
 
 }
 add_action('admin_menu', 'boc_form_menu_page');
+
+
+
+
+
 
 // Callback function to render the page content
 function boc_form_page_content() {
@@ -224,6 +249,11 @@ function boc_inactive_members_page() {
 function boc_view_user_data() {
     include(plugin_dir_path(__FILE__) . 'templates/view-user.php');
 }
+
+function boc_edit_user_data() { 
+    include(plugin_dir_path(__FILE__) . 'templates/edit-user.php');
+}
+
 
 function frontend_form(){
     ob_start();
@@ -271,16 +301,7 @@ add_shortcode('member_details_shortcode', 'show_member_details_frontend_shortcod
 
 // smtp details 
 
-function mailtrap($phpmailer) {
-    $phpmailer->isSMTP();
-    $phpmailer->Host = 'smtp.mailtrap.io';
-    $phpmailer->SMTPAuth = true;
-    $phpmailer->Port = 2525;
-    $phpmailer->Username = '6e380d75012caa';
-    $phpmailer->Password = '3a6c7363c5dc8f';
-  }
-  
-  add_action('phpmailer_init', 'mailtrap');
+
 
 
 

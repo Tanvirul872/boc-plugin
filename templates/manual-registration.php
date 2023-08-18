@@ -10,78 +10,75 @@ wp_head();
 <h2> Manual Registration </h2>
 
 <div class="wrap">
-<form action="#" id="boc_registration_manual" enctype="multipart/form-data">
-
-
-
+<form action="#" id="boc_registration_manual" enctype="multipart/form-data">   
 <div class="form-group">
     <label for="name">Name:</label>
-    <input type="text" class="form-control" id="name" name="name" >
+    <input type="text" class="form-control" id="name" name="name" required>
 </div>
   
   <div class="form-group">
     <label for="dob">Date of Birth:</label>
-    <input type="date" class="form-control" id="dob" name="dob" >
+    <input type="date" class="form-control" id="dob" name="dob" required>
   </div>
   <div class="form-group">
     <label for="designation">Present Designation:</label>
-    <input type="text" class="form-control" id="designation" name="designation" >
+    <input type="text" class="form-control" id="designation" name="designation"  required>
   </div>
   <div class="form-group">
     <label for="father">Father's Name:</label>
-    <input type="text" class="form-control" id="father" name="father" >
+    <input type="text" class="form-control" id="father" name="father" required>
   </div>
   <div class="form-group">
     <label for="mother">Mother's Name:</label>
-    <input type="text" class="form-control" id="mother" name="mother" >
+    <input type="text" class="form-control" id="mother" name="mother" required>
   </div>
   <div class="form-group">
     <label for="spouse">Spouse Name:</label>
-    <input type="text" class="form-control" id="spouse" name="spouse">
+    <input type="text" class="form-control" id="spouse" name="spouse" required> 
   </div>
   <div class="form-group">
     <label for="spouse_profession">Profession of Spouse:</label>
-    <input type="text" class="form-control" id="spouse_profession" name="spouse_profession">
+    <input type="text" class="form-control" id="spouse_profession" name="spouse_profession" required>
   </div>
   <div class="form-group">
     <label for="children">Number of Children:</label>
-    <input type="number" class="form-control" id="children" name="children">
+    <input type="number" class="form-control" id="children" name="children" required>
   </div>
   <div class="form-group">
     <label for="nationality">Nationality:</label>
-    <input type="text" class="form-control" id="nationality" name="nationality" >
+    <input type="text" class="form-control" id="nationality" name="nationality" required>
   </div>
   <div class="form-group">
     <label for="email">E-mail Address:</label>
-    <input type="email" class="form-control" id="email" name="email" >
+    <input type="email" class="form-control" id="email" name="email" required>
   </div>
   <div class="form-group">
     <label for="password">Password:</label>
-    <input type="password" class="form-control" id="password_manual" name="password" >
+    <input type="password" class="form-control" id="password_manual" name="password" required>
   </div>
   <div class="form-group">
     <label for="confirm_password">Confirm Password:</label>
-    <input type="password" class="form-control" id="confirm_password_manual" name="confirm_password" >
+    <input type="password" class="form-control" id="confirm_password_manual" name="confirm_password" required>
   </div>
   <div class="form-group">
     <label for="nid">National ID No:</label>
-    <input type="text" class="form-control" id="nid" name="nid" >
+    <input type="text" class="form-control" id="nid" name="nid" required>
   </div>
   <div class="form-group">
     <label for="nid_image">Upload NID Image:</label>
-    <input type="file" class="form-control-file" id="nid_image_manual" name="nid_image" accept="image/*" >
+    <input type="file" class="form-control-file" id="nid_image_manual" name="nid_image" accept="image/*" required>
   </div>
   <div class="form-group">
     <label for="passport">Passport No:</label>
-    <input type="text" class="form-control" id="passport" name="passport" >
+    <input type="text" class="form-control" id="passport" name="passport" required>
   </div>
   <div class="form-group">
     <label for="mobile">Mobile No:</label>
-    <input type="tel" class="form-control" id="mobile" name="mobile" >
+    <input type="tel" class="form-control" id="mobile" name="mobile"  required>
   </div>
   <div class="form-group">
     <label for="cellphone">Cell Phone:</label>
-    <input type="tel" class="form-control" id="cellphone" name="cellphone">
+    <input type="tel" class="form-control" id="cellphone" name="cellphone" required>
   </div>
   <div class="form-group">
     <label for="present_address">Present Address:</label>
@@ -126,7 +123,7 @@ wp_head();
 
   
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary manual_submit">Submit</button>
 
 
 

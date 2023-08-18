@@ -112,7 +112,7 @@ $pagination_links = paginate_links(array(
 ));
 // Display the pagination links
 if ($pagination_links) {
-  echo '<div class="pagination">' . $pagination_links . '</div>';
+  echo '<div class="pagination pagination_frontend">' . $pagination_links . '</div>';
 }
 ?>
 
